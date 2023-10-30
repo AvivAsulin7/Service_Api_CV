@@ -5,7 +5,11 @@ const pdfFile = require("../middleware/fileUpload");
 const applicantRoutes = express.Router();
 
 applicantRoutes.get("/", controllers.getApplicants);
-applicantRoutes.post("/", controllers.createApplicant);
+applicantRoutes.post(
+  "/",
+  pdfFile.single("rawData"),
+  controllers.createApplicant
+);
 applicantRoutes.delete("/:id", controllers.deleteApplicants);
 
 module.exports = applicantRoutes;

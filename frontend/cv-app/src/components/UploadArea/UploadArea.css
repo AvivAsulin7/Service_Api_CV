@@ -1,0 +1,49 @@
+.upload-area {
+  /* background-color: #352f44; */
+  width: 350px;
+  margin: auto;
+}
+
+.input-file {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  background-color: #fff;
+}
+
+.input-file input {
+  display: none;
+}
+
+.input-file label {
+  background-color: #4477ce;
+  height: 100%;
+  padding: 0 15px;
+  border: 1px solid #4477ce;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+
+  transition: var(--transition-duration), transform 0.2s var(--ease-out);
+}
+
+.input-file div {
+  height: 100%;
+  width: 215px;
+  background-color: #fff;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload-area label:hover {
+  background-color: #345a8e;
+  border-color: #345a8e;
+}
+
+.upload-cv {
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+}

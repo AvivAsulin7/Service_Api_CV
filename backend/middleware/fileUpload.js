@@ -3,10 +3,10 @@ const multer = require("multer");
 const pdfFile = multer({
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, "cv/");
+      cb(null, "cv-files/");
     },
     filename: (req, file, cb) => {
-      cb(null, Date.now() + "-" + file.originalname);
+      cb(null, file.originalname);
     },
   }),
 });

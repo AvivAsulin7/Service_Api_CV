@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Applicant = mongoose.model("applicant");
+const extractDataFromCv = require("../utils/extractDataFromCv");
 
 const getApplicants = async (req, res, next) => {
   let applicants;
@@ -7,7 +8,10 @@ const getApplicants = async (req, res, next) => {
     applicants = await Applicant.find();
   } catch (error) {
     console.log(`Error by fetching data: ${error}`);
-    res.status(403).send("ERROR");
+    return next({
+      message: "Cannot fetch the applicants, please try again.",
+      status: 500,
+    });
   }
   res.json({
     data: applicants.map((applicant) => applicant.toObject({ getters: true })),
@@ -15,16 +19,47 @@ const getApplicants = async (req, res, next) => {
 };
 
 const createApplicant = async (req, res, next) => {
-  const body = req.body;
-  const createdApplicant = new Applicant(body);
-  console.log(createdApplicant);
+  const data = await extractDataFromCv(req.file);
+
+  // console.log("EXTRACTED DATA: ", data);
+  let existApplicant;
+  try {
+    existApplicant = await Applicant.find({
+      firstName: data.firstName,
+      lastName: data.lastName,
+      id: data.id,
+      rawData: data.rawData,
+    });
+
+    console.log("sdfsdf", existApplicant);
+    if (existApplicant.length > 0) {
+      return next({
+        message: "This applicant already exist.",
+        status: 500,
+      });
+    }
+  } catch (error) {
+    return next({
+      status: 500,
+    });
+  }
+
+  const createdApplicant = new Applicant(data);
+
   try {
     await createdApplicant.save();
   } catch (error) {
-    console.log(`Error by creating new Applicant: ${error}`);
-    res.status(403).send("ERROR");
+    console.log(`Cannot create new applicant, please try again.: ${error}`);
+    return next({
+      message: "Cannot create new applicant, please try again.",
+      status: 500,
+    });
   }
-  res.json({ message: "Applicant added to db successfully!" });
+
+  res.json({
+    message: "Applicant added to db successfully!",
+    data: createdApplicant,
+  });
 };
 
 const deleteApplicants = async (req, res, next) => {
@@ -34,18 +69,25 @@ const deleteApplicants = async (req, res, next) => {
     applicant = await Applicant.findByIdAndDelete(id);
     console.log(applicant);
   } catch (error) {
-    console.log(`Error by deleting specific applicant: ${error}`);
-    res.status(403).send("ERROR");
+    console.log(`Error by deleting applicant: ${error}`);
+    return next({
+      message: "Error by deleting applicant.",
+      status: 500,
+    });
   }
 
   if (!applicant) {
-    return next(new Error("Could not find applicant for this id", 500));
+    return next({
+      message: "Could not find applicant for this id",
+      status: 500,
+    });
   }
 
   res.json({
     message: `The applicant ${
       applicant.firstName + " " + applicant.lastName
     } deleted successfully!`,
+    data: applicant,
   });
 };
 

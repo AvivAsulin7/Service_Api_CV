@@ -1,0 +1,31 @@
+.btn {
+  background-color: #4477ce;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 25px;
+  transition: var(--transition-duration), transform 0.2s var(--ease-out);
+  display: flex;
+  align-items: center;
+}
+
+.btn:hover {
+  background-color: #ffc436;
+  color: black;
+  transform: scale(1.05);
+}
+
+.btn:active {
+  transform: scale(0.95);
+}
+
+.green {
+  background-color: green;
+}
+
+.red {
+  background-color: red;
+}

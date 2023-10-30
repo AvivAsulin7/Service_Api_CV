@@ -1,0 +1,36 @@
+.applicant {
+  background-color: #232d3f;
+  margin: 10px;
+  width: 350px;
+  text-align: left;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.buttons {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.applicant h2 {
+  text-align: center;
+}
+
+.icon {
+  margin-left: 8px;
+}
+/* #232D3F */
+
+a {
+  color: #fff;
+} /* Unvisited link  */
+
+a:hover {
+  color: #0000ff;
+} /* Mouse over link */
+
+.delete-modal-btns {
+  display: flex;
+  justify-content: center;
+}
