@@ -10,7 +10,7 @@ export const getApplicants =
 
       dispatch({ type: FETCH_ALL, payload: res.data });
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   };
 
@@ -24,11 +24,8 @@ export const AddApplicant =
         data: formData,
       });
 
-      console.log(res);
-
       dispatch({ type: CREATE, payload: res.data });
     } catch (error) {
-      console.log(error);
       throw error;
     }
   };
@@ -43,6 +40,6 @@ export const deleteApplicant =
 
       dispatch({ type: DELETE, payload: res.data });
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   };

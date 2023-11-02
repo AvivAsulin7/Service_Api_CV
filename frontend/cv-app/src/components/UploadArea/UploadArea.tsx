@@ -38,9 +38,8 @@ const UploadArea: React.FC = () => {
       formData.append("rawData", file as Blob);
       try {
         await dispatch(AddApplicant(formData));
-        dispatch(getApplicants());
+        await dispatch(getApplicants());
       } catch (error) {
-        console.log(error);
         handleErrorMessage(error);
       }
     }
@@ -53,7 +52,12 @@ const UploadArea: React.FC = () => {
       </Modal>
       <div className="input-file">
         <label htmlFor="customFileInput">Choose a file...</label>
-        <input id="customFileInput" type="file" onChange={handleFileChange} />
+        <input
+          id="customFileInput"
+          type="file"
+          accept="application/pdf"
+          onChange={handleFileChange}
+        />
         <div>{file && file.name}</div>
       </div>
       <div className="upload-cv">

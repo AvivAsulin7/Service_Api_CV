@@ -2,23 +2,22 @@ import React from "react";
 import { applicantType } from "../../types/types";
 import "./Applicant.css";
 import Button from "../reusable-components/Button/Button";
-import { DELETE, GREEN, RED } from "../../constants/constant";
+import { BASE_ACCESS_PDF, DELETE, GREEN, RED } from "../../constants/constant";
 import { useDispatch } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
 import { deleteApplicant, getApplicants } from "../../redux/actions";
 import { AiFillDelete } from "react-icons/ai";
-import { BsDownload } from "react-icons/bs";
+import { BsDownload, BsLinkedin } from "react-icons/bs";
+import { CgMail } from "react-icons/cg";
+import { AiOutlinePhone } from "react-icons/ai";
 import { useModal } from "../../hooks/useModal";
 import Modal from "../reusable-components/Modal/Modal";
-import { CustomErrorType } from "../../types/types";
 
 interface applicantProps {
   applicant: applicantType;
   id: number;
 }
-
-const BASE_ACCESS_PDF = "http://localhost:5000/cv-files/";
 
 const Applicant: React.FC<applicantProps> = ({ applicant, id }) => {
   const { showModal, openModal, closeModal, handleErrorMessage, error } =
@@ -29,9 +28,8 @@ const Applicant: React.FC<applicantProps> = ({ applicant, id }) => {
     try {
       closeModal();
       await dispatch(deleteApplicant(applicant._id));
-      dispatch(getApplicants());
+      await dispatch(getApplicants());
     } catch (error) {
-      console.log(error);
       handleErrorMessage(error);
     }
   };
@@ -66,21 +64,37 @@ const Applicant: React.FC<applicantProps> = ({ applicant, id }) => {
         )}
       </Modal>
       <div>
-        <h2>Applicant {id + 1}#</h2>
-        <strong>Name:</strong> {applicant.firstName} {applicant.lastName}
+        <div>
+          <h2>
+            {applicant.firstName} {applicant.lastName}
+          </h2>
+          {applicant.id && <p>ID: {applicant.id}</p>}
+        </div>
       </div>
-      <div>
-        <strong>ID:</strong> {applicant.id}
-      </div>
-      <div>
-        <strong>Email:</strong> {applicant.email}
-      </div>
-      <div>
-        <strong>LinkedIn:</strong> <a href={applicant.linkedinUrl}>Link</a>
-      </div>
-      <div>
-        <strong>Phone:</strong> {applicant.phone}
-      </div>
+      {applicant.email && (
+        <div className="connect">
+          <strong>
+            <CgMail size={33} />
+          </strong>
+          {applicant.email}
+        </div>
+      )}
+      {applicant.linkedinUrl && (
+        <div className="connect">
+          <strong>
+            <BsLinkedin size={30} />
+          </strong>
+          <a href={applicant.linkedinUrl}>{applicant.linkedinUrl}</a>
+        </div>
+      )}
+      {applicant.phone && (
+        <div className="connect">
+          <strong>
+            <AiOutlinePhone size={30} />
+          </strong>
+          {applicant.phone}
+        </div>
+      )}
 
       <div className="buttons">
         <Button name={GREEN} onClick={handleDownloadCv}>

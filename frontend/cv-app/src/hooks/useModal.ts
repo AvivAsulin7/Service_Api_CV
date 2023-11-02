@@ -10,8 +10,6 @@ export const useModal = () => {
     if (typeof message === "string") {
       setError(message);
     } else {
-      console.log("HEREEE", message);
-
       setError(GENERAL_ERROR_MESSAGE);
     }
     openModal();

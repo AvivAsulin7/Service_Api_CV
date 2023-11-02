@@ -13,13 +13,18 @@ import cv from "./images/cv.png";
 function App() {
   const dispatch = useDispatch<ThunkDispatch<{}, {}, AnyAction>>();
   const { showModal, closeModal, handleErrorMessage, error } = useModal();
+
   useEffect(() => {
-    try {
-      dispatch(getApplicants());
-    } catch (error) {
-      handleErrorMessage(error);
-    }
-  }, [dispatch]);
+    const fetchData = async () => {
+      try {
+        await dispatch(getApplicants());
+      } catch (error) {
+        handleErrorMessage(error);
+      }
+    };
+
+    fetchData();
+  }, [dispatch, handleErrorMessage]);
 
   return (
     <div className="App">

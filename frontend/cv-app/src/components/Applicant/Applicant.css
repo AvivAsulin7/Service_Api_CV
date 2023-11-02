@@ -5,16 +5,37 @@
   text-align: left;
   padding: 20px;
   border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.applicant div {
+  margin-top: 5px;
+}
+
+.connect {
+  display: flex;
+  align-items: center;
+}
+
+strong {
+  margin-right: 15px;
 }
 
 .buttons {
-  margin-top: 10px;
   display: flex;
   justify-content: space-evenly;
 }
 
-.applicant h2 {
+.applicant h2,
+p {
   text-align: center;
+  margin: 0;
+}
+
+.applicant p {
+  font-size: 12px;
 }
 
 .icon {
@@ -24,13 +45,26 @@
 
 a {
   color: #fff;
-} /* Unvisited link  */
-
-a:hover {
-  color: #0000ff;
-} /* Mouse over link */
+}
 
 .delete-modal-btns {
   display: flex;
+  justify-content: space-evenly;
+}
+
+.box-area {
+  display: flex;
   justify-content: center;
+}
+
+.box-area div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70px;
+  height: 70px;
+  background-color: #0a2647;
+  border-radius: 20px;
+  margin: 20px 15px;
+  position: relative;
 }

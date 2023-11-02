@@ -19,11 +19,10 @@ const getApplicants = async (req, res, next) => {
 };
 
 const createApplicant = async (req, res, next) => {
-  const data = await extractDataFromCv(req.file);
-
-  // console.log("EXTRACTED DATA: ", data);
-  let existApplicant;
+  let existApplicant, data;
   try {
+    data = await extractDataFromCv(req.file);
+
     existApplicant = await Applicant.find({
       firstName: data.firstName,
       lastName: data.lastName,
@@ -31,7 +30,6 @@ const createApplicant = async (req, res, next) => {
       rawData: data.rawData,
     });
 
-    console.log("sdfsdf", existApplicant);
     if (existApplicant.length > 0) {
       return next({
         message: "This applicant already exist.",

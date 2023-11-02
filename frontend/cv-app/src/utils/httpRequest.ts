@@ -26,11 +26,9 @@ export const httpRequest = async ({
       data,
       ...config,
     });
-    console.log(response);
 
     return response.data;
   } catch (error) {
-    console.log(error);
     const customError = error as CustomErrorType;
     if (
       customError.response &&
