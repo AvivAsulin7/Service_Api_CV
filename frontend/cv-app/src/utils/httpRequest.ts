@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { CustomErrorType } from "../types/types";
 import { GENERAL_ERROR_MESSAGE } from "../constants/constant";
 
-const BASE_URL = "http://localhost:5000";
+const BASE_URL = "/api";
 
 type HttpRequestProps = AxiosRequestConfig & {
   params?: {

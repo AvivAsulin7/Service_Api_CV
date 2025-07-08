@@ -12,7 +12,7 @@ const PORT = process.env.PORT;
 
 app.use(express.json());
 
-app.use("/cv-files", express.static(path.join(__dirname, "cv-files")));
+app.use("/api/cv-files", express.static(path.join(__dirname, "cv-files")));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -25,7 +25,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/", applicantRoutes);
+app.use("/api", applicantRoutes);
 
 app.use((error, req, res, next) => {
   console.log(error);
