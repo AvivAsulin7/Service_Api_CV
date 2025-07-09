@@ -22,12 +22,17 @@ jobs:
           script: |
             cd ~/NGSOFT
             git pull origin master
+
             cd frontend
             cd cv-app
             npm install
             npm run build
+
             cd ../../backend
             npm install
+
             pkill node || true
-            nohup node index.js > server.log 2>&1 & disown
+            pm2 delete all || true
+            pm2 start index.js --name "cv-server"
+            sudo systemctl reload nginx || true
 
