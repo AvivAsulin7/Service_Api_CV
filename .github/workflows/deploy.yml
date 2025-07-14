@@ -21,8 +21,8 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             set -e
-            echo "📦 נכנסים לתיקיית NGSOFT"
-            cd ~/NGSOFT
+            echo "📦 נכנסים לתיקיית Service_Api_CV"
+            cd ~/Service_Api_CV
 
             echo "🔄 מושכים קוד מ-master"
             git pull origin master
