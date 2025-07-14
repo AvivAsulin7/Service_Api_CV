@@ -31,7 +31,7 @@ function App() {
       <Modal showModal={showModal} closeModal={closeModal}>
         <h3>{error}</h3>
       </Modal>
-      <h1>Service API for cv</h1>
+      <h1>Service API for CV</h1>
       <img src={cv} alt="cv"></img>
       <UploadArea />
       <Applicants />
