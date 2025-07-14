@@ -1,38 +1,50 @@
-- name: Deploy to EC2
-  uses: appleboy/ssh-action@v1.0.0
-  with:
-    host: ${{ secrets.EC2_HOST }}
-    username: ubuntu
-    key: ${{ secrets.EC2_SSH_KEY }}
-    script: |
-      set -e  # מפסיק את הסקריפט אם יש שגיאה
+name: Deploy to EC2
 
-      echo "📦 נכנסים לתיקיית NGSOFT"
-      cd ~/NGSOFT
+on:
+  push:
+    branches:
+      - master
 
-      echo "🔄 מושכים קוד מ-master"
-      git pull origin master
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
 
-      echo "🧱 נכנסים ל-front ומבצעים build"
-      cd frontend/cv-app
-      npm install
-      npm run build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      echo "📂 נכנסים ל-backend ומריצים את השרת"
-      cd ../../backend
-      npm install
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+      script: |
+            set -e
+            echo "📦 נכנסים לתיקיית NGSOFT"
+            cd ~/NGSOFT
 
-      echo "🛑 עוצרים שרת קודם אם קיים"
-      pkill node || true
-      pm2 delete all || true
+            echo "🔄 מושכים קוד מ-master"
+            git pull origin master
 
-      echo "🚀 מריצים index.js עם PM2"
-      pm2 start index.js --name "cv-server"
+            echo "🧱 נכנסים ל-front ומבצעים build"
+            cd frontend/cv-app
+            npm install
+            npm run build
 
-      echo "💾 שומרים תצורת PM2"
-      pm2 save
+            echo "📂 נכנסים ל-backend ומריצים את השרת"
+            cd ../../backend
+            npm install
 
-      echo "🔁 מרעננים את NGINX"
-      sudo systemctl reload nginx || true
+            echo "🛑 עוצרים שרת קודם אם קיים"
+            pkill node || true
+            pm2 delete all || true
 
-      echo "✅ סיום הפייפליין בהצלחה"
+            echo "🚀 מריצים index.js עם PM2"
+            pm2 start index.js --name "cv-server"
+            pm2 save
+
+            echo "🔁 מרעננים את NGINX"
+            sudo systemctl reload nginx || true
+
+            echo "✅ סיום הפייפליין בהצלחה"
