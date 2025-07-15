@@ -12,11 +12,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Kill process on port 27017 (if any)
-        run: |
-          sudo lsof -t -i:27017 | xargs -r sudo kill -9
-
+        
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1.0.0
         with:
@@ -33,6 +29,9 @@ jobs:
             npm run build
 
             cd ../../
+
+            sudo lsof -t -i:27017 | xargs -r sudo kill -9
+
             docker-compose down || true
             docker-compose build
             docker-compose up -d
