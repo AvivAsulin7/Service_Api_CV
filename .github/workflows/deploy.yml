@@ -28,13 +28,9 @@ jobs:
             npm install
             npm run build
 
-            cd ../../backend
-            npm install
-
-            pkill node || true
-            pm2 delete all || true
-
-            pm2 start index.js --name "cv-server"
-            pm2 save
+            cd ../../
+            docker-compose down || true
+            docker-compose build
+            docker-compose up -d
 
             sudo systemctl reload nginx || true
