@@ -32,7 +32,7 @@ function App() {
         <h3>{error}</h3>
       </Modal>
       <h1>Service API for CV</h1>
-      <h3>*New Version-using Docker & CI/CD</h3>
+      <h3>*New Version-using Docker & CI/CD & AWS</h3>
       <img src={cv} alt="cv"></img>
       <UploadArea />
       <Applicants />
